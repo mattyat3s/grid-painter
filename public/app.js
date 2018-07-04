@@ -69,12 +69,78 @@ var pixelPainter = (function () {
         message.innerHTML = msg.username + ": has selected the colour " + msg.colour;
         break;
       case "paint":
+        console.clear();
+
+        xRange = [];
+        yRange = [];
+
+        if (x) {
+          // X
+          step = 1;
+          start = x;
+          end = msg.x;
+
+          if (end < start) {
+            step = -step;
+          }
+
+          while (step > 0 ? end >= start : end <= start) {
+            xRange.push(start);
+            start += step;
+          }
+
+          // Y
+          step = 1;
+          start = y;
+          end = msg.y;
+
+          if (end < start) {
+            step = -step;
+          }
+
+          while (step > 0 ? end >= start : end <= start) {
+            yRange.push(start);
+            start += step;
+          }
+        }
+
+        console.log(xRange);
+        console.log(yRange);
+
+
+        // if (x) {
+        //   console.log("lastX", x);
+        //   var xDiff = Math.abs(x - msg.x);
+        //   for (var i = 0; i < xDiff; i++) {
+        //     console.log("midX_"+i, x+i);
+        //   }
+        //   console.log("X", msg.x);
+        //
+        //   console.log("lastY", y);
+        //   var yDiff = Math.abs(y - msg.y);
+        //   for (var i = 0; i < yDiff; i++) {
+        //     console.log("midY_"+i, y+i);
+        //   }
+        //   console.log("Y", msg.y);
+        // }
+
+        // console.log("lastX", x);
+        // console.log("lastY", y);
+        // console.log("midX", (msg.x+x) / 2);
+        // console.log("midY", (msg.y+y) / 2);
+        // console.log("X", msg.x);
+        // console.log("Y", msg.y);
+
         const cell = cells.find((cell) => {
           return cell.x === msg.x && cell.y === msg.y;
         });
 
         cell.paint();
+
         message.innerHTML = msg.username + ": has painted cell x:" + msg.x + " y:" + msg.y;
+
+        x = msg.x;
+        y = msg.y;
         break;
       case "rows":
         rowsInput.value = msg.rows;
